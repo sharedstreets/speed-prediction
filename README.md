@@ -29,3 +29,7 @@ The output format is the standard OSRM csv format for traffic profiles described
 ## Analysis Demo
 
 To demonstrate how these profiles can be used, a demo script is provided, called `demo.js`. This demo assumes you have downloaded and processed profiles for San Francisco, CA. The script will load each profile in succession, use OSRM to generate a predicted ETA for each control route, then output the data into a set of charts. These charts show how congestion changes over the course of a typical week across routes of interest.
+
+## License
+
+This code is provided under the MIT license. Note that this library uses OpenStreetMap data, licensed under the ODBL, as well as Uber Movement data, licensed under CC BY-NC 3.0 US. Both licenses require attribution and additional restrictions should be analyzed before using.
