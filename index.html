@@ -7,6 +7,7 @@
     <style media="screen">
       .container {
         height: 400px;
+        padding-bottom: 20px;
       }
     </style>
   </head>
@@ -57,10 +58,20 @@
             maintainAspectRatio: false,
             scales: {
                 yAxes: [{
+                  scaleLabel: {
+        							display: true,
+        							labelString: 'Seconds'
+        						},
                     ticks: {
                         beginAtZero: true,
                         max: max*1.3
                     }
+                }],
+                xAxes: [{
+                  scaleLabel: {
+        							display: true,
+        							labelString: 'Hour of Week'
+        						}
                 }]
             }
           }
