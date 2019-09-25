@@ -1,6 +1,8 @@
 # speed-prediction
 An OSRM predictive speed profiler using Uber Movement Speed data
 
+### [Demo](https://sharedstreets.github.io/speed-prediction/)
+
 ## Install
 
 ```sh
@@ -29,10 +31,6 @@ The output format is the standard OSRM csv format for traffic profiles described
 ## Analysis Demo
 
 To demonstrate how these profiles can be used, a demo script is provided, called `demo.js`. This demo assumes you have downloaded and processed profiles for San Francisco, CA. The script will load each profile in succession, use OSRM to generate a predicted ETA for each control route, then output the data into a set of charts. These charts show how congestion changes over the course of a typical week across routes of interest.
-
-View a prebuilt page here:
-
-https://sharedstreets.github.io/speed-prediction/
 
 ## License
 
