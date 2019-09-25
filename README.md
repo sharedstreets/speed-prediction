@@ -3,6 +3,8 @@ An OSRM predictive speed profiler using Uber Movement Speed data
 
 ### [Demo](https://sharedstreets.github.io/speed-prediction/)
 
+![screenshot](https://i.imgur.com/GVLmS3a.png)
+
 ## Install
 
 ```sh
