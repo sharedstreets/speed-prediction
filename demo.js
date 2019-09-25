@@ -1,9 +1,10 @@
- // example control route monitor
+// example control route monitor
+const path = require("path");
 const OSRM = require("osrm");
-const { exec } = require("child_process");
+const { execSync } = require("child_process");
 
 async function run() {
-  var routes = [
+  var trips = [
     {
       name: "Oakland -> SF",
       a: [-122.28905439376832, 37.810962152170354],
@@ -36,25 +37,40 @@ async function run() {
     }
   ];
 
-  const update = 'cd graph; ../node_modules/osrm/lib/binding/osrm-contract sf.osrm --segment-speed-file ../profiles/{{csv}} --core 0.5; cd ..'
+  const update =
+    "cd graph; ../node_modules/osrm/lib/binding/osrm-customize sf.osrm --segment-speed-file ../profiles/{{csv}}; cd ..";
 
   for (let day = 0; day < 7; day++) {
     for (let hour = 0; hour < 24; hour++) {
+      console.log(day + "-" + hour);
       const profile = "./profiles/" + day + "-" + hour;
 
-      const cmd = update.split('{{csv}}').join(day+'-'+hour)
-      await exec(cmd)
+      const cmd = update.split("{{csv}}").join(day + "-" + hour);
+      execSync(cmd);
 
-      const osrm = new OSRM('./graph/sf.osrm')
+      const osrm = new OSRM({
+        path: path.join(__dirname, "./graph/sf.osrm"),
+        algorithm: "MLD"
+      });
 
-      for (let route of routes) {
-        var result = osrm.route([route.a, route.b])
-        if (result && result.routes) {
-          console.log(result.routes[0])
-        }
+      for await (let trip of trips) {
+        const eta = await getETA(osrm, trip.a, trip.b);
+        trip.data.push(eta);
       }
     }
   }
+
+  console.log(JSON.stringify(trips));
+}
+
+async function getETA(osrm, a, b) {
+  return new Promise((resolve, reject) => {
+    osrm.route({ coordinates: [a, b] }, (err, result) => {
+      if (result && result.routes) {
+        resolve(result.routes[0].duration);
+      } else resolve(0);
+    });
+  });
 }
 
 run();
